@@ -2,6 +2,7 @@
 *.txt
 *.mp4
 *.tar
+.vs/
 .vscode/
 BSQ/
 Rush/
