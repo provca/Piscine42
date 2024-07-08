@@ -1,0 +1,12 @@
+*.out
+*.txt
+*.mp4
+*.tar
+.vscode/
+BSQ/
+Rush/
+Shell/
+resources/
+Vídeos/
+Videos/
+Video/
