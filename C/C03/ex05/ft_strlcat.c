@@ -153,7 +153,8 @@ ft_strlcat.c: OK!
 
 Executing: gcc -Wall -Wextra -Werror main.c ft_strlcat.c:
 main.c: In function ‘main’:
-main.c:65:25: error: implicit declaration of function ‘strlcat’; did you mean ‘strncat’? [-Werror=implicit-function-declaration]
+main.c:65:25: error: implicit declaration of function ‘strlcat’;
+   did you mean ‘strncat’? [-Werror=implicit-function-declaration]
    65 |  unsigned int std_res = strlcat(std_s1, s2, n);
       |                         ^~~~~~~
       |                         strncat

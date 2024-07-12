@@ -114,7 +114,8 @@ bool	is_valid_base(char *base)
 /*
  * Function: ft_putnbr_recursive()
  * -------------------------------
- * Recursively writes the given number in the specified base to the standard output.
+ * Recursively writes the given number in the specified base 
+ * to the standard output.
  * 
  * Syntax:
  * void ft_putnbr_recursive(int nbr, char *base, int base_len)
@@ -128,8 +129,10 @@ bool	is_valid_base(char *base)
  * - None
  * 
  * Examples:
- * - ft_putnbr_recursive(255, "01", 2) -> "11111111" (binary representation)
- * - ft_putnbr_recursive(255, "0123456789ABCDEF", 16) -> "FF" (hexadecimal representation)
+ * - ft_putnbr_recursive(255, "01", 2) 
+ *   -> "11111111" (binary representation)
+ * - ft_putnbr_recursive(255, "0123456789ABCDEF", 16) 
+ *   -> "FF" (hexadecimal representation)
  */
 void	ft_putnbr_recursive(int nbr, char *base, int base_len)
 {
