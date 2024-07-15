@@ -1,21 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_combn.c                                   :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: provira- <provira-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 18:41:38 by provira-          #+#    #+#             */
-/*   Updated: 2024/07/05 18:51:41 by provira-         ###   ########.fr       */
+/*   Created: 2024/07/15 15:34:12 by provira-          #+#    #+#             */
+/*   Updated: 2024/07/15 15:34:14 by provira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <stdlib.h>
 
-void	ft_print_combn(int n)
+int	ft_strlen(char *str)
 {
+	int	n;
+
+	n = 0;
+	while (str[n])
+		n++;
+	return (n);
 }
 
-int	main()
+char	*ft_strcat(char *dest, char *src)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(dest);
+	while (src[i] != '\0')
+		dest[len++] = src[i++];
+	return (dest);
+}
+
+char	*ft_strjoin(int size, char **strs, char *sep)
 {
 }
