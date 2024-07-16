@@ -1,39 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_point.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: provira- <provira-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 15:34:12 by provira-          #+#    #+#             */
-/*   Updated: 2024/07/15 15:34:14 by provira-         ###   ########.fr       */
+/*   Created: 2024/07/16 17:22:53 by provira-          #+#    #+#             */
+/*   Updated: 2024/07/16 17:22:54 by provira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef FT_POINT_H
+# define FT_POINT_H
 
-int	ft_strlen(char *str)
+typedef struct s_point
 {
-	int	n;
+	int	x;
+	int	y;
+}	t_point;
 
-	n = 0;
-	while (str[n])
-		n++;
-	return (n);
-}
-
-char	*ft_strcat(char *dest, char *src)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(dest);
-	while (src[i] != '\0')
-		dest[len++] = src[i++];
-	return (dest);
-}
-
-char	*ft_strjoin(int size, char **strs, char *sep)
-{
-}
+#endif
