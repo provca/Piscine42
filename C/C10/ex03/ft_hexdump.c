@@ -9,50 +9,33 @@
 /*   Updated: 2024/11/27 15:43:49 by provira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
-#include <stdlib.h>
 #include <libgen.h>
 #include <stdio.h>
 
 #define BUFFER_SIZE 16
 
 /*
- * Function: ft_putstr_err
- * ------------------------
- * Outputs a string to the standard error output.
- *
- * Parameters:
- * - char *str: The string to be displayed.
- *
- * Returns:
- * - Nothing.
+ * This function writes a string to the standard error output using the 
+   write system call.
+ * It prints each character of the string one by one.
  */
-void	ft_putstr_err(char *str)
+static void	ft_putstr_err(char *str)
 {
 	while (*str)
 		write(2, str++, 1);
 }
 
 /*
- * Function: display_error
- * ------------------------
- * Displays an error message when a file cannot be opened.
- *
- * Parameters:
- * - char *prog_name: The name of the program (for error reporting).
- * - char *filename: The name of the file that failed to open.
- *
- * Returns:
- * - Nothing.
- *
- * Output Format:
- * - "<prog_name>: <filename>: <error_message>"
+ * This function displays an error message to the standard error.
+ * It outputs the program name, the filename, and the corresponding 
+ * error message
+ * from the system's errno variable.
  */
-void	display_error(char *prog_name, char *filename)
+static void	display_error(char *prog_name, char *filename)
 {
 	ft_putstr_err(basename(prog_name));
 	ft_putstr_err(": ");
@@ -63,111 +46,70 @@ void	display_error(char *prog_name, char *filename)
 }
 
 /*
- * Function: print_hex
- * -------------------
- * Prints the hexadecimal representation of a buffer to standard output.
- *
- * Parameters:
- * - unsigned char *buffer: Pointer to the buffer containing the data.
- * - int size: The size of the data to print.
- *
- * Returns:
- * - Nothing.
- *
- * Notes:
- * - Each byte is printed as a two-digit hexadecimal value.
- * - The output is grouped into 8-byte chunks.
+ * This function prints a formatted line of hexadecimal and ASCII 
+   representation of a file's contents.
+ * The line shows the memory address (offset), followed by the bytes 
+   in hexadecimal and their ASCII equivalents.
+ * Non-printable characters are replaced by a dot ('.').
  */
-void	print_hex(unsigned char *buffer, int size)
+static void	print_line(unsigned char *buffer, int size, int offset)
 {
-	for (int i = 0; i < BUFFER_SIZE; i++)
+	int	i;
+
+	printf("%08x  ", offset);
+	i = 0;
+	while (i < BUFFER_SIZE)
 	{
 		if (i < size)
 			printf("%02x ", buffer[i]);
 		else
 			printf("   ");
-		if (i % 8 == 7)
+		if (++i % 8 == 0)
 			printf(" ");
 	}
-}
-
-/*
- * Function: print_ascii
- * ---------------------
- * Prints the ASCII representation of a buffer to standard output.
- *
- * Parameters:
- * - unsigned char *buffer: Pointer to the buffer containing the data.
- * - int size: The size of the data to print.
- *
- * Returns:
- * - Nothing.
- *
- * Notes:
- * - Non-printable characters are replaced with a dot ('.').
- */
-void	print_ascii(unsigned char *buffer, int size)
-{
-	for (int i = 0; i < size; i++)
+	printf(" |");
+	i = 0;
+	while (i < size)
 	{
 		if (buffer[i] >= 32 && buffer[i] <= 126)
 			write(1, &buffer[i], 1);
 		else
 			write(1, ".", 1);
+		i++;
 	}
+	printf("|\n");
 }
 
 /*
- * Function: display_hexdump
- * -------------------------
- * Reads the content of a file and displays it in a hexadecimal and ASCII format.
- *
- * Parameters:
- * - int fd: The file descriptor of the file to display.
- *
- * Returns:
- * - Nothing.
- *
- * Notes:
- * - For each chunk of `BUFFER_SIZE` bytes, the offset, hexadecimal representation, 
- *   and ASCII representation are printed in a formatted way.
- * - If an error occurs during reading, it calls `display_error`.
+ * This function reads a file in chunks of BUFFER_SIZE bytes and 
+   prints its hexadecimal dump.
+ * It calls print_line to display each chunk, with the appropriate 
+   offset and byte values.
  */
-void	display_hexdump(int fd)
+static void	display_hexdump(int fd)
 {
 	unsigned char	buffer[BUFFER_SIZE];
 	int				bytes_read;
-	int				offset = 0;
+	int				offset;
 
-	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
+	offset = 0;
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	while (bytes_read > 0)
 	{
-		printf("%08x  ", offset);
-		print_hex(buffer, bytes_read);
-		printf(" |");
-		print_ascii(buffer, bytes_read);
-		printf("|\n");
+		print_line(buffer, bytes_read, offset);
 		offset += bytes_read;
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (bytes_read < 0)
 		display_error("ft_hexdump", "");
 }
 
 /*
- * Function: main
- * --------------
- * Entry point of the program. Processes command-line arguments and displays
- * the hexdump of the specified files.
- *
- * Parameters:
- * - int argc: The number of arguments passed to the program.
- * - char **argv: An array of argument strings.
- *
- * Returns:
- * - 0 on successful execution, 1 on error.
- *
- * Notes:
- * - If no file is provided or if an error occurs while opening a file, an error message is displayed.
- * - Displays the hexdump for each file passed as an argument.
+ * The main function of the program. It takes one or more 
+   filenames as command line arguments.
+ * For each file, it attempts to open the file and then 
+   displays its hexadecimal dump.
+ * If a file cannot be opened, it displays an error message.
  */
 int	main(int argc, char **argv)
 {
@@ -176,9 +118,7 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 	{
-		ft_putstr_err("Usage: ");
-		ft_putstr_err(basename(argv[0]));
-		ft_putstr_err(" [file ...]\n");
+		ft_putstr_err("Usage: ft_hexdump [file ...]\n");
 		return (1);
 	}
 	i = 1;

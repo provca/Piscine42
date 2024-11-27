@@ -19,7 +19,6 @@
  * Prevents multiple inclusions of this header file in a single translation unit,
  * which could otherwise cause redefinition errors.
  */
- 
 /*
  * Structure: s_stock_str
  * -----------------------

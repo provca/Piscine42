@@ -38,7 +38,8 @@ int	is_separator(char c, char *charset)
 /*
  * Function: word_count
  * ---------------------
- * Counts the number of words in a string separated by characters from the charset.
+ * Counts the number of words in a string separated by 
+ * characters from the charset.
  *
  * Parameters:
  * - char *str: The string to analyze.
@@ -49,9 +50,11 @@ int	is_separator(char c, char *charset)
  */
 int	word_count(char *str, char *charset)
 {
-	int	count = 0;
-	int	in_word = 0;
+	int	count;
+	int	in_word;
 
+	count = 0;
+	in_word = 0;
 	while (*str)
 	{
 		if (!is_separator(*str, charset) && !in_word)
@@ -80,9 +83,11 @@ int	word_count(char *str, char *charset)
  */
 char	*word_dup(char *start, int len)
 {
-	char	*word = (char *)malloc(sizeof(char) * (len + 1));
-	int		i = 0;
+	char	*word;
+	int		i;
 
+	*word = (char *)malloc(sizeof(char) * (len + 1));
+	i = 0;
 	if (!word)
 		return (NULL);
 	while (i < len)
@@ -113,9 +118,11 @@ char	*word_dup(char *start, int len)
 char	**ft_split(char *str, char *charset)
 {
 	char	**result;
-	int		i = 0;
-	int		word_len = 0;
+	int		i;
+	int		word_len;
 
+	i = 0;
+	word_len = 0;
 	result = (char **)malloc(sizeof(char *) * (word_count(str, charset) + 1));
 	if (!result)
 		return (NULL);

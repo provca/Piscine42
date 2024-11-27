@@ -43,7 +43,8 @@ int	ft_strlen(char *str)
  * - char *src: The source string to duplicate.
  *
  * Returns:
- * - A pointer to the newly allocated duplicate string, or NULL if memory allocation fails.
+ * - A pointer to the newly allocated duplicate string, 
+ *   or NULL if memory allocation fails.
  */
 char	*ft_strdup(char *src)
 {
@@ -75,11 +76,14 @@ char	*ft_strdup(char *src)
  * - char **av: The array of strings to convert.
  *
  * Returns:
- * - A pointer to an array of `t_stock_str` structures, or NULL if memory allocation fails.
+ * - A pointer to an array of `t_stock_str` structures, 
+ *   or NULL if memory allocation fails.
  *
  * Notes:
- * - The function creates a copy of each string in `av` for the `copy` member of the structure.
- * - If memory allocation for any `copy` fails, all allocated memory is freed, and the function returns NULL.
+ * - The function creates a copy of each string in `av` for the `copy` member 
+ *   of the structure.
+ * - If memory allocation for any `copy` fails, all allocated memory is freed, 
+ *   and the function returns NULL.
  * - The last element of the array is a sentinel with `str` set to `0`.
  */
 t_stock_str	*ft_strs_to_tab(int ac, char **av)

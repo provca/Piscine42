@@ -16,15 +16,8 @@
 #define BUFFER_SIZE 1024
 
 /*
- * Function: ft_putstr_err
- * ------------------------
- * Outputs a string to the standard error output.
- *
- * Parameters:
- * - char *str: The string to be displayed.
- *
- * Returns:
- * - Nothing.
+ * This function writes a string to the standard error output.
+ * It uses the write system call to output each character of the string.
  */
 void	ft_putstr_err(char *str)
 {
@@ -33,19 +26,11 @@ void	ft_putstr_err(char *str)
 }
 
 /*
- * Function: display_file
- * -----------------------
- * Reads the content of a file and writes it to the standard output.
- *
- * Parameters:
- * - char *filename: The name of the file to read.
- *
- * Returns:
- * - Nothing.
- *
- * Notes:
- * - If the file cannot be opened, an error message is displayed on the standard error.
- * - The function reads the file in chunks defined by `BUFFER_SIZE`.
+ * This function opens a file for reading and prints its contents to 
+   the standard output.
+ * If the file cannot be opened, it outputs an error message.
+ * It reads the file in chunks of BUFFER_SIZE bytes and writes them
+ * to the output.
  */
 void	display_file(char *filename)
 {
@@ -57,27 +42,24 @@ void	display_file(char *filename)
 	if (fd < 0)
 	{
 		ft_putstr_err("Cannot read file.\n");
-		return;
+		return ;
 	}
-	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	while (bytes_read > 0)
+	{
 		write(1, buffer, bytes_read);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+	}
 	close(fd);
 }
 
 /*
- * Function: main
- * --------------
- * Entry point of the program. Handles arguments and calls `display_file`.
- *
- * Parameters:
- * - int argc: The number of arguments passed to the program.
- * - char **argv: The array of argument strings.
- *
- * Returns:
- * - 0 on successful execution.
- *
- * Notes:
- * - Displays an error message if no file name is provided or if too many arguments are given.
+ * This is the main function of the program.
+ * It checks the number of command-line arguments and calls 
+ * display_file to print
+ * the content of the file specified in the argument.
+ * If the number of arguments is incorrect, an error message
+ * is printed.
  */
 int	main(int argc, char **argv)
 {

@@ -45,7 +45,8 @@ void	ft_putstr(char *str)
  * - Nothing.
  *
  * Notes:
- * - Handles the special case of `-2147483648` directly, as it cannot be represented 
+ * - Handles the special case of `-2147483648` directly,
+ *   as it cannot be represented 
  *   using positive values in a 32-bit signed integer system.
  */
 void	ft_putnbr(int nbr)
